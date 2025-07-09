@@ -2,6 +2,7 @@ package com.tw.service;
 
 import com.tw.entity.Book;
 import com.tw.repo.BookRepository;
+import com.tw.util.InvalidBookException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findByIsbn(int isbn) {
-        return repo.findById(isbn).orElse(null);
+        return repo.findById(isbn).orElseThrow(
+                () -> new InvalidBookException("Book with ISBN " + isbn + " not found"));
     }
 
     @Override
@@ -41,7 +43,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findByTitle(String title) {
-        return repo.findByTitle(title);
+        return repo.findByTitle(title).orElseThrow(
+                () -> new InvalidBookException("Book with title " + title + " not found")
+        );
     }
 
     @Override
