@@ -43,31 +43,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAll() {
-        return List.of();
+        return orderRepo.findAll();
     }
 
     @Override
     public List<Order> ordersByCustomer(int custId) {
-        return List.of();
+        return orderRepo.findByCustomerCustId(custId);
     }
 
     @Override
     public List<Order> ordersByPayMode(String payMode, int custId) {
-        return List.of();
+        return orderRepo.findByPayMode(payMode, custId);
     }
 
     @Override
     public List<Order> ordersWithDates(LocalDate start, LocalDate end, int custId) {
-        return List.of();
+        return orderRepo.findByDateRangeForCustomer(start, end, custId);
     }
 
     @Override
     public int totalOrderByCustomer(int custID) {
-        return 0;
+        return orderRepo.countByCustomerCustId(custID);
     }
 
     @Override
     public List<Order> orderForProduct(int code) {
-        return List.of();
+        return orderRepo.findByProdCode(code);
     }
 }

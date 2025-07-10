@@ -37,7 +37,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean updateStock(int code) {
-        Product p = repo.findById(code).orElseThrow(() -> new ProductNotFoundException("Product not found by Code: " + code));
+        Product p = repo.findById(code).orElseThrow(
+                () -> new ProductNotFoundException("Product not found by Code: " + code));
         if(p.getStock() == 0)
             throw new ProductOutOfStockException("Product out of stock code: " + code);
         p.setStock(p.getStock() - 1);

@@ -2,6 +2,7 @@ package com.tw.service;
 
 import com.tw.entity.Customer;
 import com.tw.repo.CustomerRepository;
+import com.tw.util.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer addCustomer(Customer customer) {
-        return null;
+        return repo.save(customer);
     }
 
     @Override
     public Customer findByCustId(int custId) {
-        return null;
+        return repo.findById(custId).orElseThrow(
+                ()->new CustomerNotFoundException("Customer not found: " + custId));
     }
 
     @Override
