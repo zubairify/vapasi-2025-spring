@@ -18,11 +18,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addProduct(Product product) {
-        try {
-            return repo.save(product);
-        } catch (Exception e) {
+        if(repo.existsById(product.getCode()))
             throw new ProductAlreadyExistException("Product already exist with Code: " + product.getCode());
-        }
+
+        return repo.save(product);
     }
 
     @Override

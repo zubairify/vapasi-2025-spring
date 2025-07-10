@@ -17,11 +17,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer addCustomer(Customer customer) {
-        try {
-            return repo.save(customer);
-        } catch (Exception e) {
+        if(repo.existsById(customer.getCustId()))
             throw new CustomerAlreadyExistException("Customer already exists with ID: " + customer.getCustId());
-        }
+
+        return repo.save(customer);
     }
 
     @Override
