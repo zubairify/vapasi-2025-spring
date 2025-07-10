@@ -20,7 +20,7 @@ public class Customer {
     @Column(length = 30)
     private String password;
 
-    @JsonManagedReference
+    @JsonManagedReference("cust")
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Order> orders;
 }

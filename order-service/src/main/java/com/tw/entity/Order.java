@@ -20,12 +20,12 @@ public class Order {
     private String payMode;
     private double platformFee;
 
-    @JsonBackReference
+    @JsonBackReference("prod")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "code")
     private Product prod;
 
-    @JsonBackReference
+    @JsonBackReference("cust")
     @ManyToOne
     @JoinColumn(name = "cust_id")
     private Customer customer;

@@ -16,7 +16,7 @@ public class Product {
     private double price;
     private int stock;
 
-    @JsonManagedReference
+    @JsonManagedReference("prod")
     @OneToMany(mappedBy = "prod")
     private List<Order> orders;
 }
