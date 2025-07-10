@@ -2,6 +2,7 @@ package com.tw.service;
 
 import com.tw.entity.Product;
 import com.tw.repo.ProductRepository;
+import com.tw.util.ProductAlreadyExistException;
 import com.tw.util.ProductNotFoundException;
 import com.tw.util.ProductOutOfStockException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +18,28 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addProduct(Product product) {
-        return null;
+        try {
+            return repo.save(product);
+        } catch (Exception e) {
+            throw new ProductAlreadyExistException("Product already exist with Code: " + product.getCode());
+        }
     }
 
     @Override
     public Product findByCode(int code) {
-        return null;
+        return repo.findById(code).orElseThrow(
+                () -> new ProductNotFoundException("Product with code " + code + " not found")
+        );
     }
 
     @Override
     public List<Product> findAll() {
-        return List.of();
+        return repo.findAll();
     }
 
     @Override
     public List<Product> outOfStock() {
-        return List.of();
+        return repo.findOutOfStock();
     }
 
     @Override

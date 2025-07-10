@@ -1,5 +1,6 @@
 package com.tw.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class Customer {
     @Column(length = 30)
     private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Order> orders;
 }

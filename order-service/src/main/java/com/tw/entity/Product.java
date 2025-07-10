@@ -1,5 +1,6 @@
 package com.tw.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class Product {
     private double price;
     private int stock;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "prod")
     private List<Order> orders;
 }
