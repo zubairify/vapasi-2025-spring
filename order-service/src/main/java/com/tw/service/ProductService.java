@@ -13,4 +13,6 @@ public interface ProductService {
     List<Product> findAll();
 
     List<Product> outOfStock();
+
+    boolean updateStock(int code);
 }
