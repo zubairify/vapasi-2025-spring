@@ -19,13 +19,13 @@ public class BookController {
     @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Book> save(@RequestBody Book book) {
         Book savedBook = service.save(book);
-        return new ResponseEntity<>(savedBook, HttpStatus.OK);
+        return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{isbn}", produces = "application/json")
     public ResponseEntity<Book> findByIsbn(@PathVariable int isbn) {
         Book book = service.findByIsbn(isbn);
-        return new ResponseEntity<>(book, HttpStatus.OK);
+        return new ResponseEntity<>(book, HttpStatus.FOUND);
     }
 
     @GetMapping(value = "/author/{author}", produces = "application/json")
@@ -39,30 +39,34 @@ public class BookController {
     }
 
     @GetMapping(value = "/title/{title}", produces = "application/json")
-    public Book findByTitle(@PathVariable String title) {
-        return service.findByTitle(title);
+    public ResponseEntity<Book> findByTitle(@PathVariable String title) {
+        Book book = service.findByTitle(title);
+        return new ResponseEntity<>(book, HttpStatus.FOUND);
     }
 
     @GetMapping(value = "/genre/{genre}", produces = "application/json")
-    public List<Book> findByGenre(@PathVariable String genre) {
-        return service.findByGenre(genre);
+    public ResponseEntity<List<Book>> findByGenre(@PathVariable String genre) {
+        List<Book> books = service.findByGenre(genre);
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     @GetMapping(value = "/all", produces = "application/json")
-    public List<Book> findAll() {
-        return service.findAll();
+    public ResponseEntity<List<Book>> findAll() {
+        List<Book> books = service.findAll();
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     @GetMapping(value = "/price", produces = "application/json")
-    public List<Book> findByPriceRange(@RequestParam double min, @RequestParam double max) {
-        return service.findByPriceRange(min, max);
+    public ResponseEntity<List<Book>> findByPriceRange(@RequestParam double min, @RequestParam double max) {
+        List<Book> books = service.findByPriceRange(min, max);
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     @DeleteMapping("/{isbn}")
-    public String deleteByIsbn(@PathVariable int isbn) {
+    public ResponseEntity<String> deleteByIsbn(@PathVariable int isbn) {
         if(service.deleteByIsbn(isbn))
-            return "Book deleted";
+            return new ResponseEntity<>("Book deleted", HttpStatus.OK);
         else
-            return "Book not found";
+            return new ResponseEntity<>("Book not found",  HttpStatus.NOT_FOUND);
     }
 }
